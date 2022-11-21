@@ -15,4 +15,3 @@ class Game:
         screen.clear()
 
         modes.MainMenu(screen).run()
-        screen.clear()

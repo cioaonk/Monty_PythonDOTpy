@@ -40,15 +40,17 @@ class MainMenu:
 
         while True:
             key = self.screen.get_key()
-            logging.warn(f"Key {key}, {type(key)}")
+            if key is not None:
+                logging.warn(f"Key {key}, {type(key)}")
+
             if key in [ord('Q'), ord('q')]:
                 sys.exit(0)
             elif key == 10: # enter key
                 Level1(self.screen).run()
+                return
             elif key in [ord('I'), ord('i')]:
                 InfoScreen(self.screen).run()
-        
-        self.screen.clear()
+                return
 
 class InfoScreen:
     def __init__(self, screen):
@@ -61,11 +63,14 @@ class InfoScreen:
 
         while True:
             key = self.screen.get_key()
-            logging.warn(f"Key {key}, {type(key)}")
+            if key is not None:
+                logging.warn(f"Key {key}, {type(key)}")
+
             if key in [ord('Q'), ord('q')]:
                 sys.exit(0)
             elif key == 10: # enter key
                 MainMenu(self.screen).run()
+                return
 
 class Level1:
     def __init__(self, screen):
@@ -75,3 +80,11 @@ class Level1:
         self.screen.clear()
         self.screen.print_at("Level1", 0, 0)
         self.screen.refresh()
+
+        while True:
+            key = self.screen.get_key()
+            if key is not None:
+                logging.warn(f"Key {key}, {type(key)}")
+
+            if key in [ord('Q'), ord('q')]:
+                sys.exit(0)

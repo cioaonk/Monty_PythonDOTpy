@@ -10,7 +10,7 @@ def signalHandler():
 def main(screen):
     signal.signal(signal.SIGINT, signalHandler)
     game = Game()
-    game.loop(screen)
+    game.play(screen)
 
 if __name__ == "__main__":
     Screen.wrapper(main, unicode_aware=True)

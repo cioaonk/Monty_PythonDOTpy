@@ -1,20 +1,19 @@
 from asciimatics.event import KeyboardEvent
-import input
 import sys
+import logging
+
 import modes
 
 class Game:
     def __init__(self):
-        pass
+        logging.basicConfig(filename="debug.log", encoding='utf-8', level=logging.DEBUG)
+        logging.debug("Starting game...")
 
-    def loop(self, screen):
+    def play(self, screen):
+        screen.set_title("MontyPYthon")
+        mode = modes.TitleScreen(screen)
+        mode.run()
+        screen.clear()
+
         mode = modes.MainMenu(screen)
-
-        while True:
-            input.update()
-            event = screen.get_event()
-            key = event.key_code if isinstance(event, KeyboardEvent) else None
-            if key in ((ord('Q'), ord('q'))):
-                sys.exit(0)
-            mode.run()
-            screen.refresh()
+        mode.run()

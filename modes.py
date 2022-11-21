@@ -32,10 +32,46 @@ class MainMenu:
         self.screen = screen
 
     def run(self):
-        self.screen.print_at("In MainMenu", 0, 0)
+        self.screen.clear()
+        self.screen.centre("Play (Enter)", self.screen.height - 6)
+        self.screen.centre("Info (I)", self.screen.height - 5)
+        self.screen.centre("Quit (Q)", self.screen.height - 4)
         self.screen.refresh()
 
         while True:
             key = self.screen.get_key()
+            logging.warn(f"Key {key}, {type(key)}")
             if key in [ord('Q'), ord('q')]:
                 sys.exit(0)
+            elif key == 10: # enter key
+                Level1(self.screen).run()
+            elif key in [ord('I'), ord('i')]:
+                InfoScreen(self.screen).run()
+        
+        self.screen.clear()
+
+class InfoScreen:
+    def __init__(self, screen):
+        self.screen = screen
+
+    def run(self):
+        self.screen.clear()
+        self.screen.print_at("Info. Press Q to quit or Enter to go back.", 0, 0)
+        self.screen.refresh()
+
+        while True:
+            key = self.screen.get_key()
+            logging.warn(f"Key {key}, {type(key)}")
+            if key in [ord('Q'), ord('q')]:
+                sys.exit(0)
+            elif key == 10: # enter key
+                MainMenu(self.screen).run()
+
+class Level1:
+    def __init__(self, screen):
+        self.screen = screen
+    
+    def run(self):
+        self.screen.clear()
+        self.screen.print_at("Level1", 0, 0)
+        self.screen.refresh()

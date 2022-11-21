@@ -11,9 +11,8 @@ class Game:
 
     def play(self, screen):
         screen.set_title("MontyPYthon")
-        mode = modes.TitleScreen(screen)
-        mode.run()
+        modes.TitleScreen(screen).run()
         screen.clear()
 
-        mode = modes.MainMenu(screen)
-        mode.run()
+        modes.MainMenu(screen).run()
+        screen.clear()

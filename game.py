@@ -1,5 +1,3 @@
-from asciimatics.event import KeyboardEvent
-import sys
 import logging
 
 import modes
@@ -15,3 +13,6 @@ class Game:
         screen.clear()
 
         modes.MainMenu(screen).run()
+        screen.clear()
+
+        modes.Level1(screen).run()

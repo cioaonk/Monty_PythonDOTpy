@@ -80,22 +80,14 @@ class InfoScreen:
 class Level1:
     def __init__(self, screen):
         self.screen = screen
-
-        self.player_x = 2
-        self.player_y = 12
+        self.win = self.setup_level()
     
     def run(self):
-        curses.initscr()
-        win = curses.newwin(int(self.screen.height * 3 / 4), self.screen.width, 0, 0)
-        win.keypad(1)
-        curses.noecho()
-        curses.curs_set(0)
-        win.border(0)
-        win.nodelay(1)
+        self.display(self.win, player, self.player_x, self.player_y)
 
         while True:
             key = -1
-            event = win.getch()
+            event = self.win.getch()
             if event != -1:
                 key = event
             else:
@@ -106,22 +98,46 @@ class Level1:
                 sys.exit(0)
             
             elif key == curses.KEY_RIGHT:
-                self.player_x += 1 * MOVE_SPEED
+                move = 1 * MOVE_SPEED
+                if self.player_x + move + self.player_width < self.width:
+                    self.player_x += move
             elif key == curses.KEY_LEFT:
-                self.player_x += -1 * MOVE_SPEED
+                move = 1 * MOVE_SPEED
+                if self.player_x - move - self.player_width > -4: # not sure why -4 is necessary for the border but otherwise there's a gap
+                    self.player_x -= move
             elif key == curses.KEY_UP:
-                self.player_y += -1 * MOVE_SPEED
+                move = 1 * MOVE_SPEED
+                if self.player_y - move - self.player_height > -6: # same as above
+                    self.player_y -= move
             elif key == curses.KEY_DOWN:
-                self.player_y += 1 * MOVE_SPEED
+                move = 1 * MOVE_SPEED
+                if self.player_y + move + self.player_height < self.height:
+                    self.player_y += move
 
-            # check valid before displaying
-            self.display(win, player, self.player_x, self.player_y)
+            self.display(self.win, player, self.player_x, self.player_y)
 
-            time.sleep(0.1)
-            
+            time.sleep(0.075)
 
     def display(self, win, object, x, y):
         win.erase()
         win.border(0)
         for y, line in enumerate(object.splitlines(), y):
             win.addstr(y, x, line)
+    
+    def setup_level(self):
+        self.height = int(self.screen.height * 3 / 4)
+        self.width = self.screen.width
+        curses.initscr()
+        win = curses.newwin(self.height, self.width, 0, 0)
+        win.keypad(1)
+        curses.noecho()
+        curses.curs_set(0)
+        win.border(0)
+        win.nodelay(1)
+
+        self.player_x = 2
+        self.player_y = 12
+        self.player_width = 4
+        self.player_height = 5
+
+        return win

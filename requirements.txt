@@ -1,0 +1,2 @@
+asciimatics>=1.14.0
+keyboard>=0.13.5

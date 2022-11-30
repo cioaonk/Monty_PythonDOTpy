@@ -1,20 +1,12 @@
 # Monty_PythonDOTpy
 
-Game Ideas: 
-Monty Python themed
+Setup instructions:
+```
+pip3 install -r requirements.txt
+```
 
-Something with Steve's ascii-fied face. 
-
-three levels:
-hand grenades
-bridge
-steve
-
-fight guy with no arms
-forest of "ne"s
-
-
-research:
-Ascii-matics - Drew & Ethan 
-watch monty python & learn github - Matthew
-ascii art - ian 
+Playing instructions:
+```
+python3 main.py
+```
+Use WASD to move. You have 30 seconds to score as many points as possible.

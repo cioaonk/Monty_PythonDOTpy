@@ -5,6 +5,7 @@ import logging
 import sys
 import curses
 import time
+import random
 
 from resources.characters import PLAYER as player
 
@@ -85,6 +86,8 @@ class Level1:
     def run(self):
         self.display(self.win, player, self.player_x, self.player_y)
 
+        start_time = time.time()
+
         while True:
             key = -1
             event = self.win.getch()
@@ -116,6 +119,12 @@ class Level1:
 
             self.display(self.win, player, self.player_x, self.player_y)
 
+            self.screen.refresh()
+
+            if time.time() - start_time > 5:
+                GameOver(self.screen).run()
+                return
+
             time.sleep(0.075)
 
     def display(self, win, object, x, y):
@@ -140,4 +149,33 @@ class Level1:
         self.player_width = 4
         self.player_height = 5
 
+        self.screen.centre("WASD to move.", self.height + 6)
+        self.screen.centre("You have 30 seconds.", self.height + 8)
+        self.screen.centre("Score points.", self.height + 10)
+
         return win
+
+class GameOver:
+    def __init__(self, screen):
+        self.screen = screen
+    
+    def run(self):
+        effects = [
+            Cycle(
+                self.screen,
+                FigletText("You Scored"),
+                self.screen.height // 2 - 14
+            ),
+            Cycle(
+                self.screen,
+                FigletText(f"{random.randint(0, 100)} Points"),
+                self.screen.height // 2 - 8
+            ),
+            Cycle(
+                self.screen,
+                SpeechBubble("Press Q to quit"),
+                self.screen.height - 3
+            ),
+            Stars(self.screen, 200)
+        ]
+        self.screen.play([Scene(effects, 5000)], repeat=False)

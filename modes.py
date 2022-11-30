@@ -121,7 +121,7 @@ class Level1:
 
             self.screen.refresh()
 
-            if time.time() - start_time > 5:
+            if time.time() - start_time > 30:
                 GameOver(self.screen).run()
                 return
 
